@@ -27,6 +27,10 @@ Route::get('/admin', function () {
     return 'Admin Area';
 })->middleware('role:admin');
 
+Route::get('/adminserverkitchen', function () {
+    return 'Admin Server Kitchen Area';
+})->middleware('role:admin,server,kitchen' );
+
 Route::get('/kitchen', function () {
     return 'Kitchen Area';
 })->middleware('role:kitchen');
