@@ -9,6 +9,7 @@
 
                 <div class="panel-body">
                     You are logged in!
+                    {{ Auth::user()->role->name }}
                 </div>
             </div>
         </div>
