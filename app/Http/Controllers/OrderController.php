@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderItemRequest;
+use App\Notifications\AddOrderToKitchen;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,8 @@ class OrderController extends Controller
         $input = $request->all();
         $order = Order::create($input);
         Auth::user()->assignOrder($order);
+
+        Auth::user()->notify(new AddOrderToKitchen($order));
 
         return redirect('/orders');
     }

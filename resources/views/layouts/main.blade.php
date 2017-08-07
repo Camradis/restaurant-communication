@@ -62,33 +62,32 @@
             <!-- /.dropdown -->
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    <i class="fa fa-bell fa-fw"></i> Notifications
+                    <span class="badge">
+                        {{ count(Auth::user()->unreadNotifications) }}
+                    </span>
+                    <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-alerts">
-                    <li>
+                    @foreach(Auth::user()->unreadNotifications as $notification)
                         <a href="#">
-                            <div>
-                                <i class="fa fa-comment fa-fw"></i> New Comment
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
+                            <li>
+                                <div>
+                                    <i class="fa fa-envelope fa-fw"></i>
+                                    Server {{ $notification->data['user']['name'] }} add new <a href="{{ route('orders.show' , $notification->data['order']['id']) }}">Order#{{ $notification->data['order']['id'] }}</a>!
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </li>
                         </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#">
-                            <div>
-                                <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                <span class="pull-right text-muted small">4 minutes ago</span>
-                            </div>
-                        </a>
-                    </li>
+                        <li class="divider"></li>
+                    @endforeach
                 </ul>
                 <!-- /.dropdown-alerts -->
             </li>
             <!-- /.dropdown -->
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    <i class="fa fa-user fa-fw"></i> Profile <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
