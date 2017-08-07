@@ -1,5 +1,6 @@
 <?php
-
+use App\Models\User;
+use App\Models\Order;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,18 +20,34 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/server', function () {
-    return 'Server Area';
-})->middleware('role:server');
+Route::group(['middleware' => ['auth']], function () {
 
-Route::get('/admin', function () {
-    return view('layouts.main');
-})->middleware('role:admin');
+    Route::get('/orders', 'OrderController@index' )
+        ->name('orders.index')
+        ->middleware('role:admin,server,kitchen');
 
-Route::get('/adminserverkitchen', function () {
-    return 'Admin Server Kitchen Area';
-})->middleware('role:admin,server,kitchen' );
+    Route::get('/orders/create', 'OrderController@create' )
+        ->name('orders.create')
+        ->middleware('role:admin,server');
 
-Route::get('/kitchen', function () {
-    return 'Kitchen Area';
-})->middleware('role:kitchen');
+    Route::post('/orders', 'OrderController@store' )
+        ->name('orders.store')
+        ->middleware('role:admin,server');
+
+    Route::get('/orders/{order}', 'OrderController@show' )
+        ->name('orders.show')
+        ->middleware('role:admin,server');
+
+});
+
+Route::get('/some', function () {
+
+    $order = new Order;
+    $order->dish_name = "Vodka";
+    $order->save();
+
+    $order = new Order;
+    $order->dish_name = "Beer";
+    $order->save();
+
+});

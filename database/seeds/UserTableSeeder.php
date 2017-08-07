@@ -32,6 +32,20 @@ class UserTableSeeder extends Seeder
         $server->save();
         $server->assignRole($serverRole);
 
+        $server = new User();
+        $server->name = 'Server Name2';
+        $server->email = 'server2@example.com';
+        $server->password = bcrypt('secret');
+        $server->save();
+        $server->assignRole($serverRole);
+
+        $server = new User();
+        $server->name = 'Server Name3';
+        $server->email = 'server3@example.com';
+        $server->password = bcrypt('secret');
+        $server->save();
+        $server->assignRole($serverRole);
+
         $kitchen = new User();
         $kitchen->name = 'Kitchen Name';
         $kitchen->email = 'kitchen@example.com';

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderItemRequest;
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class OrderController extends Controller
 {
@@ -13,7 +15,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::all();
+
+        return view('orders.index')->with(compact('orders'));
     }
 
     /**
@@ -23,7 +27,9 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('orders.create');
+
     }
 
     /**
@@ -32,9 +38,13 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrderItemRequest $request)
     {
-        //
+        $input = $request->all();
+
+        Order::create($input);
+
+        return redirect('/orders');
     }
 
     /**
@@ -45,7 +55,9 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        return view('orders.show')->with(compact('order'));
     }
 
     /**
