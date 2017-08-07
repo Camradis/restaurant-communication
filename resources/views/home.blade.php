@@ -8,8 +8,10 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in!
-                    {{ Auth::user()->role->name }}
+                    You {{ Auth::user()->name }} are logged in!
+                    @foreach(Auth::user()->roles as $role)
+                        {{ $role->name }}
+                    @endforeach
                 </div>
             </div>
         </div>
