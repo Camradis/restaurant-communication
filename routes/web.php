@@ -24,7 +24,7 @@ Route::get('/server', function () {
 })->middleware('role:server');
 
 Route::get('/admin', function () {
-    return 'Admin Area';
+    return view('layouts.main');
 })->middleware('role:admin');
 
 Route::get('/adminserverkitchen', function () {
