@@ -19,4 +19,14 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('user/activation/{token}', 'Auth\AuthController@userActivation');
+Route::get('/server', function () {
+    return 'Server Area';
+})->middleware('role:server');
+
+Route::get('/admin', function () {
+    return 'Admin Area';
+})->middleware('role:admin');
+
+Route::get('/kitchen', function () {
+    return 'Kitchen Area';
+})->middleware('role:kitchen');
