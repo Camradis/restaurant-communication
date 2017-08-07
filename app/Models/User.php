@@ -52,4 +52,29 @@ class User extends Authenticatable
         return $this->roles()->detach($role);
     }
 
+    public function orders()
+    {
+        return $this->belongsToMany('App\Models\Order')->withTimestamps();
+    }
+
+    public function hasOrder($id)
+    {
+        foreach($this->orders as $order)
+        {
+            if($order->id == $id) return true;
+        }
+
+        return false;
+    }
+
+    public function assignOrder($order)
+    {
+        return $this->orders()->attach($order);
+    }
+
+    public function removeOrder($order)
+    {
+        return $this->orders()->detach($order);
+    }
+
 }

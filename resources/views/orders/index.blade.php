@@ -9,6 +9,8 @@
         <!-- /.col-lg-12 -->
     </div>
 
+    @if (! Auth::user()->hasRole('kitchen'))
+
     <div class="row">
         <div class="col-lg-12">
             <a href="{{ route('orders.create') }}">
@@ -20,6 +22,8 @@
         </div>
     </div>
 
+    @endif
+
     <!-- /.row -->
     <div class="row">
         @forelse( $orders as $order)
@@ -30,9 +34,23 @@
                 </div></a>
                 <div class="panel-body">
                     <p> Dish: {{ $order->dish_name }}</p>
+                    <p> Server:
+                        @foreach($order->users as $user)
+                            {{ $user->name }}
+                        @endforeach
+                    </p>
                 </div>
                 <div class="panel-footer">
-                    Order status: {{ $order ->status }}
+                    Order status:
+                    @if ($order->status == 1)
+                        <i>Completed</i>
+                    @else
+                        <i>Uncompleted</i>
+                    @endif
+
+                    @if (! Auth::user()->hasRole('server'))
+                    <a href="{{ route('orders.edit' , ['id' => $order->id ]) }}">Edit</a>
+                    @endif
                 </div>
             </div>
         </div>

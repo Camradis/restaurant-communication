@@ -38,6 +38,14 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('orders.show')
         ->middleware('role:admin,server');
 
+    Route::get('/orders/{order}/edit' , 'OrderController@edit')
+        ->name('orders.edit')
+        ->middleware('role:admin,kitchen');
+
+    Route::patch('/order/{order}' , 'OrderController@update')
+        ->name('orders.update')
+        ->middleware('role:admin,kitchen');
+
 });
 
 Route::get('/some', function () {

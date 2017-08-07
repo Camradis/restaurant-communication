@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\OrderItemRequest;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -41,8 +42,8 @@ class OrderController extends Controller
     public function store(OrderItemRequest $request)
     {
         $input = $request->all();
-
-        Order::create($input);
+        $order = Order::create($input);
+        Auth::user()->assignOrder($order);
 
         return redirect('/orders');
     }
@@ -68,7 +69,9 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        return view('orders.edit')->with(compact('order'));
     }
 
     /**
@@ -78,9 +81,13 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(OrderItemRequest $request, $id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $input = $request->all();
+        $order->fill($input)->save();
+
+        return redirect('/orders');
     }
 
     /**
@@ -91,6 +98,6 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }
