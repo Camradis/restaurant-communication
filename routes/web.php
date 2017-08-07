@@ -22,29 +22,35 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::get('/orders', 'OrderController@index' )
-        ->name('orders.index')
-        ->middleware('role:admin,server,kitchen');
+    Route::group(['middleware' => 'role:admin,server,kitchen'], function() {
 
-    Route::get('/orders/create', 'OrderController@create' )
-        ->name('orders.create')
-        ->middleware('role:admin,server');
+        Route::get('/orders/create', 'OrderController@create' )
+            ->name('orders.create');
 
-    Route::post('/orders', 'OrderController@store' )
-        ->name('orders.store')
-        ->middleware('role:admin,server');
+        Route::get('/orders', 'OrderController@index' )
+            ->name('orders.index');
 
-    Route::get('/orders/{order}', 'OrderController@show' )
-        ->name('orders.show')
-        ->middleware('role:admin,server');
+    });
 
-    Route::get('/orders/{order}/edit' , 'OrderController@edit')
-        ->name('orders.edit')
-        ->middleware('role:admin,kitchen');
+    Route::group(['middleware' => 'role:admin,server'], function() {
 
-    Route::patch('/order/{order}' , 'OrderController@update')
-        ->name('orders.update')
-        ->middleware('role:admin,kitchen');
+        Route::post('/orders', 'OrderController@store' )
+            ->name('orders.store');
+
+        Route::get('/orders/{order}', 'OrderController@show' )
+            ->name('orders.show');
+
+    });
+
+    Route::group(['middleware' => 'role:admin,kitchen'], function() {
+
+        Route::get('/orders/{order}/edit' , 'OrderController@edit')
+            ->name('orders.edit');
+
+        Route::patch('/order/{order}' , 'OrderController@update')
+            ->name('orders.update');
+
+    });
 
 });
 
