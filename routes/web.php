@@ -54,14 +54,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 });
 
-Route::get('/some', function () {
-
-    $order = new Order;
-    $order->dish_name = "Vodka";
-    $order->save();
-
-    $order = new Order;
-    $order->dish_name = "Beer";
-    $order->save();
-
+Route::get('/notification/readed', function () {
+    Auth::user()->unreadNotifications->markAsRead();
 });

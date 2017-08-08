@@ -7,6 +7,7 @@ use App\Notifications\AddOrderToKitchen;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class OrderController extends Controller
 {
@@ -17,7 +18,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::orderBy('created_at', 'desc')->get();
 
         return view('orders.index')->with(compact('orders'));
     }
@@ -46,7 +47,8 @@ class OrderController extends Controller
         $order = Order::create($input);
         Auth::user()->assignOrder($order);
 
-        Auth::user()->notify(new AddOrderToKitchen($order));
+        $user = User::findOrFail(5);
+        $user->notify(new AddOrderToKitchen($order));
 
         return redirect('/orders');
     }

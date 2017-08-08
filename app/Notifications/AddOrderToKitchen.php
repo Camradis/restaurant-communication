@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Auth;
 
 class AddOrderToKitchen extends Notification
 {
@@ -44,7 +45,7 @@ class AddOrderToKitchen extends Notification
     {
         return [
             'order' => $this->order,
-            'user' => $notifiable,
+            'user' => Auth::user()
         ];
     }
 
