@@ -1,6 +1,7 @@
 <?php
 use App\Models\User;
 use App\Models\Order;
+use Carbon\Carbon;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,4 +57,13 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/notification/readed', function () {
     Auth::user()->unreadNotifications->markAsRead();
+});
+
+
+Route::get('/some', function () {
+    foreach (Auth::user()->unreadNotifications as $notification){
+        if($notification->type == "App\\Notifications\\AddOrderToKitchen"){
+            echo true;
+        }else echo false;
+    }
 });

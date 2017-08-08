@@ -11,8 +11,14 @@
             <div onclick="markNotificationAsRead({{ count(Auth::user()->unreadNotifications) }})">
                 <li>
                     <i class="fa fa-envelope fa-fw"></i>
-                    {{ $notification->data['user']['name'] }} add new Order#{{ $notification->data['order']['id'] }}
-                    <span class="pull-right text-muted small">4 minutes ago</span>
+                    {{ $notification->data['user']['name'] }}
+                        @if($notification->type == "App\\Notifications\\AddOrderToKitchen")
+                            update
+                        @else
+                            add new
+                        @endif
+                    Order#{{ $notification->data['order']['id'] }}
+                    <span class="pull-right text-muted small">{{ $notification->data['time']['date'] }}</span>
                 </li>
             </div>
             <li class="divider"></li>

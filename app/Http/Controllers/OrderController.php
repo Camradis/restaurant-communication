@@ -92,6 +92,9 @@ class OrderController extends Controller
         $input = $request->all();
         $order->fill($input)->save();
 
+        $user = $order->users->first();
+        $user->notify(new AddOrderToKitchen($order));
+
         return redirect('/orders');
     }
 
