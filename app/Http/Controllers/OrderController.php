@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderItemRequest;
+use App\Mail\OrderCreated;
 use App\Notifications\AddOrderToKitchen;
 use App\Notifications\EditOrderByKitchen;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -50,6 +52,7 @@ class OrderController extends Controller
         $user = User::findOrFail(5);
         $user->notify(new AddOrderToKitchen($order));
 
+        Mail::to(Auth::user())->send(new OrderCreated($order));
         return redirect('/orders');
     }
 

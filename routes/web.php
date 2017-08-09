@@ -1,7 +1,11 @@
 <?php
 use App\Models\User;
 use App\Models\Order;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
+use App\Mail\OrderCreated;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -70,8 +74,19 @@ Route::get('/notification/readed', function () {
     Auth::user()->unreadNotifications->markAsRead();
 });
 
+Route::get('/some/{id}', function ($id) {
+    $key = "desc";
 
-Route::get('/some', function () {
-    $users = User::with('roles')->get();
+    if($id == 1){
+        $value = "email";
+    } elseif ($id == 2){
+        $value = "name";
+    } elseif ($id == 3){
+        $value = "created_at";
+    } else return "Idi nahooi";
+
+    $users = DB::table('users')
+        ->orderBy($value, $key)
+        ->get();
     return $users;
 });
