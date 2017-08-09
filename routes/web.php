@@ -58,6 +58,12 @@ Route::group(['middleware' => ['auth']], function () {
 
     });
 
+    Route::group(['middleware' => 'role:admin,kitchen'], function() {
+
+        Route::get('/admin/users' , 'Admin\AdminController@index')
+            ->name('admin.index');
+
+    });
 });
 
 Route::get('/notification/readed', function () {
@@ -66,6 +72,6 @@ Route::get('/notification/readed', function () {
 
 
 Route::get('/some', function () {
-    $order = Order::findOrFail(2);
-    return $order->users->first()->name;
+    $users = User::with('roles')->get();
+    return $users;
 });

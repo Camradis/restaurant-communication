@@ -16,6 +16,11 @@
             <li>
                 <a href="{{ route('home') }}"><i class="fa fa-home fa-fw"></i> Home</a>
             </li>
+            @if( ! Auth::user()->hasRole('server'))
+                <li>
+                    <a href="{{ route('admin.index') }}"><i class="fa fa-users fa-fw"></i>Administrate users</a>
+                </li>
+            @endif
             <li>
                 <a href="#"><i class="fa fa-opera fa-fw"></i> Orders<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
