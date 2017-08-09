@@ -2,13 +2,15 @@
 
 namespace App\Notifications;
 
+
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Auth;
 
-class AddOrderToKitchen extends Notification
+class OrderCompleteByKitchen extends Notification
 {
     use Queueable;
     protected $order;
@@ -47,7 +49,6 @@ class AddOrderToKitchen extends Notification
             'user' => Auth::user(),
         ];
     }
-
 
     /**
      * Get the array representation of the notification.

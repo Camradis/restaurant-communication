@@ -14,8 +14,10 @@
                     {{ $notification->data['user']['name'] }}
                         @if($notification->type == "App\\Notifications\\AddOrderToKitchen")
                             add new
-                        @else
+                        @elseif($notification->type == "App\\Notifications\\EditOrderByKitchen")
                             update
+                        @else
+                            completed
                         @endif
                     Order#{{ $notification->data['order']['id'] }}
                     <span class="pull-right text-muted small">{{ $notification->created_at->diffForHumans() }}</span>

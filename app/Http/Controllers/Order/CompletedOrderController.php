@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\OrderCompleteByKitchen;
 use Illuminate\Http\Request;
 use App\Models\Order;
 
@@ -20,7 +21,8 @@ class CompletedOrderController extends Controller
         $status = $order->status;
         $order->status = !$status;
         $order->save();
-
+        $user = $order->users->first();
+        $user->notify(new OrderCompleteByKitchen($order));
         return redirect('/orders');
     }
 }

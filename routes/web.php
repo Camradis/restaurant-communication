@@ -66,9 +66,6 @@ Route::get('/notification/readed', function () {
 
 
 Route::get('/some', function () {
-    foreach (Auth::user()->unreadNotifications as $notification){
-        if($notification->type == "App\\Notifications\\AddOrderToKitchen"){
-            echo true;
-        }else echo false;
-    }
+    $order = Order::findOrFail(2);
+    return $order->users->first()->name;
 });

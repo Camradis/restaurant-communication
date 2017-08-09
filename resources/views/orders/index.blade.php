@@ -37,17 +37,24 @@
                 </div>
                 </a>
                 <div class="panel-body">
+                    @if (! Auth::user()->hasRole('server'))
                     <p>
                         <a href="{{ route('orders.completed.update' , ['id' => $order->id ]) }}"
                            onclick="event.preventDefault();
                              document.getElementById('complete-form').submit();">
-                            <i class="fa fa-circle fa-fw"></i>Complete
+                            <i class="fa fa-circle fa-fw"></i>
+                            @if ($order->status == 1)
+                                Unomplete
+                            @else
+                                Complete
+                            @endif
                         </a>
                         <form id="complete-form" action="{{ route('orders.completed.update' , ['id' => $order->id ]) }}" method="POST" style="display: none;">
                             {{ csrf_field() }}
                             {{ method_field('PATCH') }}
                         </form>
                     </p>
+                    @endif
                     <p> Dish: {{ $order->dish_name }}</p>
                     <p> Server:
                         @foreach($order->users as $user)
