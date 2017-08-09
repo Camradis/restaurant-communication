@@ -10,7 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Auth;
 
-class AddOrderToKitchen extends Notification
+class EditOrderByKitchen extends Notification
 {
     use Queueable;
     protected $order;
@@ -47,7 +47,6 @@ class AddOrderToKitchen extends Notification
         return [
             'order' => $this->order,
             'user' => Auth::user(),
-            'time' => Carbon::now(),
         ];
     }
 

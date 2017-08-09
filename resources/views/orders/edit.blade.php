@@ -33,6 +33,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('board') ? ' has-error' : '' }}">
+                            <label for="board" class="col-md-4 control-label">Board number</label>
+
+                            <div class="col-md-6">
+                                <input id="board" type="text" class="form-control" name="board" value="{{ $order->board }}" required>
+
+                                @if ($errors->has('board'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('board') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

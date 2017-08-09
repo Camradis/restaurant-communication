@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class AddOrderToKitchen extends Notification
 {
     use Queueable;
-    protected $order;
+    public $order;
 
     /**
      * Create a new notification instance.
@@ -32,7 +33,7 @@ class AddOrderToKitchen extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database' , 'broadcast'];
     }
 
     /**
@@ -46,8 +47,21 @@ class AddOrderToKitchen extends Notification
         return [
             'order' => $this->order,
             'user' => Auth::user(),
-            'time' => Carbon::now(),
         ];
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array|BroadcastMessage
+     */
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage([
+            'order' => $this->order,
+            'user' => Auth::user(),
+        ]);
     }
 
     /**

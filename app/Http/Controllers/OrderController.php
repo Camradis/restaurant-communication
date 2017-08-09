@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderItemRequest;
 use App\Notifications\AddOrderToKitchen;
+use App\Notifications\EditOrderByKitchen;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +19,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::orderBy('created_at', 'desc')->get();
-
+        $orders = Order::orderBy('created_at', 'desc')->where('status', '=', false )->get();
         return view('orders.index')->with(compact('orders'));
     }
 
@@ -93,7 +93,7 @@ class OrderController extends Controller
         $order->fill($input)->save();
 
         $user = $order->users->first();
-        $user->notify(new AddOrderToKitchen($order));
+        $user->notify(new EditOrderByKitchen($order));
 
         return redirect('/orders');
     }

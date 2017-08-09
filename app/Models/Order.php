@@ -9,7 +9,7 @@ class Order extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = array('dish_name', 'status');
+    protected $fillable = array('dish_name', 'status' , 'board');
 
     public function users()
     {

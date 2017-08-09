@@ -31,6 +31,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/orders', 'OrderController@index' )
             ->name('orders.index');
 
+        Route::get('/orders/completed', 'Order\CompletedOrderController@index' )
+            ->name('orders.completed.index');
     });
 
     Route::group(['middleware' => 'role:admin,server'], function() {
@@ -50,6 +52,9 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::patch('/order/{order}' , 'OrderController@update')
             ->name('orders.update');
+
+        Route::patch('/order/{order}/completed' , 'Order\CompletedOrderController@update')
+            ->name('orders.completed.update');
 
     });
 

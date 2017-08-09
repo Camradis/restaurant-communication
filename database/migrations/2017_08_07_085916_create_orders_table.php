@@ -16,6 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('dish_name');
+            $table->string('board');
             $table->boolean('status')->default(false);
             $table->timestamps();
             $table->softDeletes();

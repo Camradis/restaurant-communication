@@ -29,10 +29,25 @@
         @forelse( $orders as $order)
         <div class="col-lg-4">
             <div class="panel panel-primary">
-                <a href="{{ route('orders.show' , ['id' => $order->id]) }}"><div class="panel-heading">
+                <a href="{{ route('orders.show' , ['id' => $order->id]) }}">
+                <div class="panel-heading">
+
                     Order # {{ $order->id }}
-                </div></a>
+
+                </div>
+                </a>
                 <div class="panel-body">
+                    <p>
+                        <a href="{{ route('orders.completed.update' , ['id' => $order->id ]) }}"
+                           onclick="event.preventDefault();
+                             document.getElementById('complete-form').submit();">
+                            <i class="fa fa-circle fa-fw"></i>Complete
+                        </a>
+                        <form id="complete-form" action="{{ route('orders.completed.update' , ['id' => $order->id ]) }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                            {{ method_field('PATCH') }}
+                        </form>
+                    </p>
                     <p> Dish: {{ $order->dish_name }}</p>
                     <p> Server:
                         @foreach($order->users as $user)
@@ -50,6 +65,9 @@
 
                     @if (! Auth::user()->hasRole('server'))
                     <a href="{{ route('orders.edit' , ['id' => $order->id ]) }}">Edit</a>
+                        <p>
+                            Board #<b>{{ $order->board }}</b>
+                        </p>
                     @endif
                 </div>
             </div>

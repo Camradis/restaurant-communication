@@ -13,12 +13,12 @@
                     <i class="fa fa-envelope fa-fw"></i>
                     {{ $notification->data['user']['name'] }}
                         @if($notification->type == "App\\Notifications\\AddOrderToKitchen")
-                            update
-                        @else
                             add new
+                        @else
+                            update
                         @endif
                     Order#{{ $notification->data['order']['id'] }}
-                    <span class="pull-right text-muted small">{{ $notification->data['time']['date'] }}</span>
+                    <span class="pull-right text-muted small">{{ $notification->created_at->diffForHumans() }}</span>
                 </li>
             </div>
             <li class="divider"></li>

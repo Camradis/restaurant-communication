@@ -23,7 +23,7 @@
                         <a href="{{ route('orders.index')}}">Uncompleted orders</a>
                     </li>
                     <li>
-                        <a href="{{ route('orders.index')}}">Completed orders</a>
+                        <a href="{{ route('orders.completed.index')}}">Completed orders</a>
                     </li>
                 </ul>
                 <!-- /.nav-second-level -->
