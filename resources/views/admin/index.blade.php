@@ -24,18 +24,6 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="col-md-6 col-md-offset-4">
-                    <button type="submit" class="btn btn-primary">
-                        Search
-                    </button>
-                </div>
-            </div>
-        </form>
-
-        <form class="form-horizontal" method="POST" action="{{ route('admin.search') }}">
-            {{ csrf_field() }}
-
             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                 <label for="email" class="col-md-4 control-label">Email</label>
 
@@ -74,10 +62,10 @@
                         <thead>
                         <tr>
                             <th>Name
-                                <a href="{{ Request::url().'?ascsorting=name' }}">
+                                <a href="{{ Request::fullUrl().'&ascsorting=name' }}">
                                     <i class="fa fa-sort-alpha-asc"></i>
                                 </a>
-                                <a href="{{ Request::url().'?descsorting=name' }}">
+                                <a href="{{ Request::fullUrl().'&descsorting=name' }}">
                                     <i class="fa fa-sort-alpha-desc"></i>
                                 </a>
                             </th>

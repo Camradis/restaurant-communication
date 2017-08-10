@@ -71,7 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/admin/users' , 'Admin\UserController@index')
             ->name('admin.index');
 
-        Route::post('/admin/users' , 'Admin\UserController@index')
+        Route::post('/admin/users' , 'Admin\UserController@store')
             ->name('admin.search');
 
     });
