@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Filters\QueryFilter;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -75,6 +76,10 @@ class User extends Authenticatable
     public function removeOrder($order)
     {
         return $this->orders()->detach($order);
+    }
+
+    public function scopeFilter($buider, QueryFilter $filters){
+        return $filters->apply($buider);
     }
 
 }

@@ -5,22 +5,28 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Filters\UserFilter;
 
 class UserController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * @param UserFilter $filters
+     * @return mixed
+     */
+    public function index(UserFilter $filters)
     {
-        $key = $request->input('key');
-        $field = $request->input('sortingBy');
-
-        if($field == NULL || $key == NULL){
-            $users = User::latest()->paginate(10);
-        } else {
-
-            $users = User::orderBy($field, $key)
-                ->paginate(10);
-        }
-
-        return view('admin.index')->with(compact('users'));
+        return User::filter($filters)->get();
+//        $key = $request->input('key');
+//        $field = $request->input('sortingBy');
+//
+//        if($field == NULL || $key == NULL){
+//            $users = User::latest()->paginate(10);
+//        } else {
+//
+//            $users = User::orderBy($field, $key)
+//                ->paginate(10);
+//        }
+//
+//        return view('admin.index')->with(compact('users'));
     }
 }
