@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderItemRequest;
 use App\Mail\OrderCreated;
+
 use App\Notifications\AddOrderToKitchen;
 use App\Notifications\EditOrderByKitchen;
-use Illuminate\Http\Request;
+
 use App\Models\Order;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Filters\OrderFilter;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -19,9 +23,12 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(OrderFilter $filters)
     {
-        $orders = Order::latest()->where('status', '=', false )->paginate(6 );
+        $orders = Order::filter($filters)->with('users')->get();
+
+        return $orders;
+//        $orders = Order::latest()->where('status', '=', false )->paginate(6 );
         return view('orders.index')->with(compact('orders'));
     }
 

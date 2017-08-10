@@ -62,10 +62,10 @@
                         <thead>
                         <tr>
                             <th>Name
-                                <a href="{{ Request::fullUrl().'&ascsorting=name' }}">
+                                <a href="{{ route('admin.index', ['ascsorting' => 'name']) }}">
                                     <i class="fa fa-sort-alpha-asc"></i>
                                 </a>
-                                <a href="{{ Request::fullUrl().'&descsorting=name' }}">
+                                <a href="{{ route('admin.index', ['descsorting' => 'name']) }}">
                                     <i class="fa fa-sort-alpha-desc"></i>
                                 </a>
                             </th>
