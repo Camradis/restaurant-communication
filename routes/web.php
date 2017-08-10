@@ -27,6 +27,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth']], function () {
 
+    Route::get('/notification/readed', function () {
+        Auth::user()->unreadNotifications->markAsRead();
+    });
+
     Route::group(['middleware' => 'role:admin,server,kitchen'], function() {
 
         Route::get('/orders/create', 'OrderController@create' )
@@ -67,12 +71,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/admin/users' , 'Admin\UserController@index')
             ->name('admin.index');
 
+        Route::post('/admin/users' , 'Admin\UserController@index')
+            ->name('admin.search');
+
     });
 });
 
-Route::get('/notification/readed', function () {
-    Auth::user()->unreadNotifications->markAsRead();
-});
+
 
 Route::get('/some/{id}', function ($id) {
     $key = "desc";
