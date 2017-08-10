@@ -21,27 +21,27 @@
                         <thead>
                         <tr>
                             <th>Name
-                                <a href="{{ route('admin.index', ['sortingBy' => 'name' , 'key' => 'ASC' ]) }}">
+                                <a href="{{ route('admin.index', ['ascsorting' => 'name']) }}">
                                     <i class="fa fa-sort-alpha-asc"></i>
                                 </a>
-                                <a href="{{ route('admin.index', ['sortingBy' => 'name' , 'key' => 'DESC' ]) }}">
+                                <a href="{{ route('admin.index', ['descsorting' => 'name']) }}">
                                     <i class="fa fa-sort-alpha-desc"></i>
                                 </a>
                             </th>
                             <th>Email
-                                <a href="{{ route('admin.index', ['sortingBy' => 'email' , 'key' => 'ASC' ]) }}">
+                                <a href="{{ route('admin.index', ['ascsorting' => 'email']) }}">
                                     <i class="fa fa-sort-alpha-asc"></i>
                                 </a>
-                                <a href="{{ route('admin.index', ['sortingBy' => 'email' , 'key' => 'DESC' ]) }}">
+                                <a href="{{ route('admin.index', ['descsorting' => 'email']) }}">
                                     <i class="fa fa-sort-alpha-desc"></i>
                                 </a>
                             </th>
                             <th>Role</th>
                             <th>Registered
-                                <a href="{{ route('admin.index', ['sortingBy' => 'created_at' , 'key' => 'ASC' ]) }}">
+                                <a href="{{ route('admin.index', ['ascsorting' => 'created_at']) }}">
                                     <i class="fa fa-sort-alpha-asc"></i>
                                 </a>
-                                <a href="{{ route('admin.index', ['sortingBy' => 'created_at' , 'key' => 'DESC' ]) }}">
+                                <a href="{{ route('admin.index', ['descsorting' => 'created_at']) }}">
                                     <i class="fa fa-sort-alpha-desc"></i>
                                 </a>
                             </th>
@@ -70,7 +70,7 @@
                         @endforelse
                         </tbody>
                     </table>
-                    {{ $users->links() }}
+{{--                    {{ $users->links() }}--}}
                 </div>
                 <!-- /.panel-body -->
             </div>
