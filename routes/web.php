@@ -64,7 +64,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => 'role:admin,kitchen'], function() {
 
-        Route::get('/admin/users' , 'Admin\AdminController@index')
+        Route::get('/admin/users' , 'Admin\UserController@index')
             ->name('admin.index');
 
     });

@@ -21,7 +21,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::orderBy('created_at', 'desc')->where('status', '=', false )->get();
+        $orders = Order::orderBy('created_at', 'desc')->where('status', '=', false )->paginate(6 );
         return view('orders.index')->with(compact('orders'));
     }
 

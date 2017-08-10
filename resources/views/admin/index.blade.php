@@ -20,10 +20,10 @@
                     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
+                            <th><a href="{{ route('admin.index', ['sortingBy' => 'name' ]) }}"><div>Name <i class="fa fa-sort"></i></div></a></th>
+                            <th><a href="{{ route('admin.index', ['sortingBy' => 'email' ]) }}"><div>Email <i class="fa fa-sort"></i></div></a></th>
                             <th>Role</th>
-                            <th>Registered</th>
+                            <th><a href="{{ route('admin.index', ['sortingBy' => 'created_at' ]) }}"><div>Registered <i class="fa fa-sort"></i></div></a></th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -38,7 +38,7 @@
                                 @endforeach
                             </td>
                             <td class="center">
-                                {{ $user->created_at->diffForHumans() }}
+                                {{ $user->created_at }}
                             </td>
                             <td>
 
@@ -57,5 +57,4 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
-
 @endsection
