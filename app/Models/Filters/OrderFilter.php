@@ -26,6 +26,10 @@ class OrderFilter extends QueryFilter
         return $this->builder->where('board' , $boardNumber);
     }
 
+    public function status($orderStatus){
+        return $this->builder->where('status' , $orderStatus);
+    }
+
     public function server($searchingName){
         return $this->builder
             ->join('order_user', 'orders.id', '=', 'order_user.order_id')
