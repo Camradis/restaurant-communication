@@ -20,10 +20,31 @@
                     <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                         <tr>
-                            <th><a href="{{ route('admin.index', ['sortingBy' => 'name' ]) }}"><div>Name <i class="fa fa-sort"></i></div></a></th>
-                            <th><a href="{{ route('admin.index', ['sortingBy' => 'email' ]) }}"><div>Email <i class="fa fa-sort"></i></div></a></th>
+                            <th>Name
+                                <a href="{{ route('admin.index', ['sortingBy' => 'name' , 'key' => 'ASC' ]) }}">
+                                    <i class="fa fa-sort-alpha-asc"></i>
+                                </a>
+                                <a href="{{ route('admin.index', ['sortingBy' => 'name' , 'key' => 'DESC' ]) }}">
+                                    <i class="fa fa-sort-alpha-desc"></i>
+                                </a>
+                            </th>
+                            <th>Email
+                                <a href="{{ route('admin.index', ['sortingBy' => 'email' , 'key' => 'ASC' ]) }}">
+                                    <i class="fa fa-sort-alpha-asc"></i>
+                                </a>
+                                <a href="{{ route('admin.index', ['sortingBy' => 'email' , 'key' => 'DESC' ]) }}">
+                                    <i class="fa fa-sort-alpha-desc"></i>
+                                </a>
+                            </th>
                             <th>Role</th>
-                            <th><a href="{{ route('admin.index', ['sortingBy' => 'created_at' ]) }}"><div>Registered <i class="fa fa-sort"></i></div></a></th>
+                            <th>Registered
+                                <a href="{{ route('admin.index', ['sortingBy' => 'created_at' , 'key' => 'ASC' ]) }}">
+                                    <i class="fa fa-sort-alpha-asc"></i>
+                                </a>
+                                <a href="{{ route('admin.index', ['sortingBy' => 'created_at' , 'key' => 'DESC' ]) }}">
+                                    <i class="fa fa-sort-alpha-desc"></i>
+                                </a>
+                            </th>
                             <th>Actions</th>
                         </tr>
                         </thead>

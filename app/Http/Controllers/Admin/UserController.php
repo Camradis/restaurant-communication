@@ -8,14 +8,16 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    public function index($sortingBy = null )
+    public function index(Request $request)
     {
-        $key = "desc";
+        $key = $request->input('key');
+        $field = $request->input('sortingBy');
 
-        if($sortingBy == NULL){
+        if($field == NULL || $key == NULL){
             $users = User::latest()->paginate(10);
         } else {
-            $users = User::orderBy($sortingBy, $key)
+
+            $users = User::orderBy($field, $key)
                 ->paginate(10);
         }
 
