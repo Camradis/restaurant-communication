@@ -111,7 +111,7 @@
                         @endforelse
                         </tbody>
                     </table>
-{{--                    {{ $users->links() }}--}}
+                    {{$users->render()}}
                 </div>
                 <!-- /.panel-body -->
             </div>

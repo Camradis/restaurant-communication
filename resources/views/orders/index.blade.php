@@ -83,7 +83,7 @@
             <p>No orders found.</p>
         @endforelse
         <div class="col-lg-4">
-            {{ $orders->links() }}
+            {{ $orders->render() }}
         </div>
     </div>
     <!-- /.row -->
