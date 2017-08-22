@@ -23,7 +23,7 @@ class Controller extends BaseController
 
         $collection = new Collection($data);
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $perPage = 6;
+        $perPage = 9;
         $currentPageSearchResults = $collection->slice(($currentPage - 1) * $perPage, $perPage)->all();
         $paginatedSearchResults= new LengthAwarePaginator($currentPageSearchResults, count($collection), $perPage);
         $paginatedSearchResults->setPath($request->url());

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TestEvent;
 use App\Http\Requests\OrderItemRequest;
 use App\Mail\OrderCreated;
 
@@ -57,6 +58,7 @@ class OrderController extends Controller
         $user = User::findOrFail(5);
         $user->notify(new AddOrderToKitchen($order));
 
+        event( new TestEvent($order));
         Mail::to(Auth::user())->send(new OrderCreated($order));
         return redirect('/orders');
     }

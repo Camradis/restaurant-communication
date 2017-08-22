@@ -25,7 +25,7 @@
     @endif
 
     <!-- /.row -->
-    <div class="row">
+    <div class="row orders">
         @forelse( $orders as $order)
         <div class="col-lg-4">
             <div class="panel panel-primary">
@@ -87,5 +87,29 @@
         </div>
     </div>
     <!-- /.row -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script>
 
+        var socket = io(':3000');
+
+        function appendMessage(data){
+            $('.orders').append(
+                $('<p/>').append(
+                    $('<p/>').text('Dish -'+data.dish_name+' '),
+                    $('<p/>').text('Board -'+data.board+' '),
+                    $('<p/>').text('Created -'+data.created_at+' ')
+                )
+            );
+        }
+
+        socket.on('service:item' , function(data){
+            console.log(data.id);
+            console.log(data.dish_name);
+
+            appendMessage(data);
+        });
+
+    </script>
 @endsection

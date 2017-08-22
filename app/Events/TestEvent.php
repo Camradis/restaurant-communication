@@ -10,21 +10,22 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use App\Models\Order;
 
 class TestEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $time;
+    public $order;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Order $order)
     {
-
+        $this->order = $order;
     }
 
     /**
@@ -37,14 +38,7 @@ class TestEvent implements ShouldBroadcast
         return ['service'];
     }
 
-    public function broadcastWith(){
-        return [
-            'time' => microtime(),
-            'version' => 0.1
-        ];
-    }
-
     public function broadcastAs(){
-        return 'microtime';
+        return 'item';
     }
 }

@@ -73,15 +73,5 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
-
-
-Route::get('/test', function () {
-
-    event(
-        new TestEvent()
-    );
-
-//    return view('test');
-});
-
-
+Route::get('/items' , 'ItemController@index');
+Route::post('/items' , 'ItemController@postItem');

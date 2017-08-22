@@ -1,59 +1,75 @@
-<!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+@extends('layouts.app')
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
-<body>
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Websockets</div>
 
-<ul class="chat">
+                    <div class="panel-body">
+                        <ul class="chat">
+                            @foreach($items as $item)
+                                <li>
+                                    <b> {{ $item->id }}</b>
+                                    <b> {{ $item->dish_name }}</b>
+                                    <b> {{ $item->board }}</b>
+                                    <b> {{ $item->status }}</b>
+                                    <b> {{ $item->created_at }}</b>
+                                </li>
+                            @endforeach
+                        </ul>
 
-</ul>
+                        <hr>
 
-<hr>
+                        <form action="/items" method="POST">
+                            {{ csrf_field() }}
+                            <input type="text" name="author">
+                            <br>
+                            <textarea name="content" style="width: 60%; height: 100px"></textarea>
+                            <input type="submit" value="Send">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script>
 
-<form action="">
+        var socket = io(':3000');
 
-    <textarea style="width: 60%; height: 100px"></textarea>
-    <input type="submit" value="Send">
-</form>
+        function appendMessage(data){
+            $('.chat').append(
+                $('<li/>').append(
+                    $('<b/>').text(data.dish_name),
+                    $('<b/>').text(data.board),
+                    $('<b/>').text(data.created_at)
+                )
+            );
+        }
 
+    //    $('form').on('submit' , function(){
+    //
+    //        var text = $('textarea').val(),
+    //            msg = {message: text};
+    //
+    //        socket.send(msg);
+    //        appendMessage(msg);
+    //        $('textarea').val('');
+    //
+    //        return false;
+    //
+    //    });
+    //
+        socket.on('service:item' , function(data){
+            console.log(data.id);
+            console.log(data.dish_name);
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.min.js"></script>
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
-<script>
+           appendMessage(data);
+        });
 
-//    var socket = io(':3000');
-//
-//    function appendMessage(data){
-//        $('.chat').append(
-//            $('<li/>').text(data.message)
-//        );
-//    }
-//
-//    $('form').on('submit' , function(){
-//
-//        var text = $('textarea').val(),
-//            msg = {message: text};
-//
-//        socket.send(msg);
-//        appendMessage(msg);
-//        $('textarea').val('');
-//
-//        return false;
-//
-//    });
-//
-//    socket.on('message' , function(data){
-//       appendMessage(data);
-//    });
-
-</script>
-</body>
-</html>
+    </script>
+@endsection
