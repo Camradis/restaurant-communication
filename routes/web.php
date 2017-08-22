@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Redis;
+use App\Events\TestEvent;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,16 +76,12 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 Route::get('/test', function () {
-    $data = [
-        'event' => "EventName",
-        'data' => [
-            'username' => "Endigo"
-        ]
-    ];
 
-    Redis::publish('test-channel' , json_encode($data));
+    event(
+        new TestEvent()
+    );
 
-    return view('test');
+//    return view('test');
 });
 
 

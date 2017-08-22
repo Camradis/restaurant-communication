@@ -15,16 +15,16 @@ class TestEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
+    public $time;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Message $message)
+    public function __construct()
     {
-        $this->message = $message;
+
     }
 
     /**
@@ -34,6 +34,17 @@ class TestEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('test-channel');
+        return ['service'];
+    }
+
+    public function broadcastWith(){
+        return [
+            'time' => microtime(),
+            'version' => 0.1
+        ];
+    }
+
+    public function broadcastAs(){
+        return 'microtime';
     }
 }
