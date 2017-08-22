@@ -1,10 +1,5 @@
 <?php
-use App\Models\User;
-use App\Models\Order;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\DB;
-use App\Mail\OrderCreated;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,19 +74,17 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-Route::get('/some/{id}', function ($id) {
-    $key = "desc";
+Route::get('/test', function () {
+    $data = [
+        'event' => "EventName",
+        'data' => [
+            'username' => "Endigo"
+        ]
+    ];
 
-    if($id == 1){
-        $value = "email";
-    } elseif ($id == 2){
-        $value = "name";
-    } elseif ($id == 3){
-        $value = "created_at";
-    } else return "Idi nahooi";
+    Redis::publish('test-channel' , json_encode($data));
 
-    $users = DB::table('users')
-        ->orderBy($value, $key)
-        ->get();
-    return $users;
+    return view('test');
 });
+
+
