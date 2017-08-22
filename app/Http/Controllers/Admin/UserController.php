@@ -19,23 +19,7 @@ class UserController extends Controller
     public function index(Request $request, UserFilter $filters)
     {
         $users = User::filter($filters)->get();
-        //Get current page form url e.g. &page=6
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-
-        //Create a new Laravel collection from the array data
-        $collection = new Collection($users);
-
-        //Define how many items we want to be visible in each page
-        $perPage = 3;
-
-
-        //Slice the collection to get the items to display in current page
-        $currentPageSearchResults = $collection->slice(($currentPage - 1) * $perPage, $perPage)->all();
-
-        //Create our paginator and pass it to the view
-        $paginatedSearchResults= new LengthAwarePaginator($currentPageSearchResults, count($collection), $perPage);
-        $paginatedSearchResults->setPath($request->url());
-        $paginatedSearchResults->appends($request->except(['page']));
+        $paginatedSearchResults = $this->paginate($users, $request);
         return view('admin.index', ['users' => $paginatedSearchResults]);
     }
 

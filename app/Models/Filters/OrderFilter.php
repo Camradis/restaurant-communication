@@ -32,6 +32,7 @@ class OrderFilter extends QueryFilter
 
     public function server($searchingName){
         return $this->builder
+            ->select('orders.*', 'order_user.user_id as server_id')
             ->join('order_user', 'orders.id', '=', 'order_user.order_id')
             ->join('users', 'order_user.user_id', '=', 'users.id')
             ->where('users.name' , 'LIKE' , '%' . $searchingName . '%');

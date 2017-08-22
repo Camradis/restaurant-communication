@@ -15,8 +15,6 @@ use App\Models\Filters\OrderFilter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 
 class OrderController extends Controller
 {
@@ -27,24 +25,8 @@ class OrderController extends Controller
      */
     public function index(Request $request, OrderFilter $filters)
     {
-        $orders = Order::filter($filters)->with('users')->get();
-
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-
-        //Create a new Laravel collection from the array data
-        $collection = new Collection($orders);
-
-        //Define how many items we want to be visible in each page
-        $perPage = 3;
-
-
-        //Slice the collection to get the items to display in current page
-        $currentPageSearchResults = $collection->slice(($currentPage - 1) * $perPage, $perPage)->all();
-
-        //Create our paginator and pass it to the view
-        $paginatedSearchResults= new LengthAwarePaginator($currentPageSearchResults, count($collection), $perPage);
-        $paginatedSearchResults->setPath($request->url());
-        $paginatedSearchResults->appends($request->except(['page']));
+        $orders = Order::filter($filters)->with('users')->where('status' , false)->get();
+        $paginatedSearchResults = $this->paginate($orders, $request);
         return view('orders.index', ['orders' => $paginatedSearchResults]);
     }
 
