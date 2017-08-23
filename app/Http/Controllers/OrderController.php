@@ -6,6 +6,7 @@ use App\Events\TestEvent;
 use App\Http\Requests\OrderItemRequest;
 use App\Mail\OrderCreated;
 
+use App\Mail\OrderUpdated;
 use App\Notifications\AddOrderToKitchen;
 use App\Notifications\EditOrderByKitchen;
 
@@ -104,6 +105,7 @@ class OrderController extends Controller
 
         $user = $order->users->first();
         $user->notify(new EditOrderByKitchen($order));
+        Mail::to($user)->send(new OrderUpdated($order));
 
         return redirect('/orders');
     }
