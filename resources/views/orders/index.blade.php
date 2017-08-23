@@ -27,7 +27,7 @@
     <!-- /.row -->
     <div class="row orders">
         @forelse( $orders as $order)
-        <div class="col-lg-4">
+        <div class="col-lg-4 order-{{ $order->id }}">
             <div class="panel panel-primary">
                 <a href="{{ route('orders.show' , ['id' => $order->id]) }}">
                 <div class="panel-heading">
@@ -109,6 +109,11 @@
             console.log(data.dish_name);
 
             appendMessage(data);
+        });
+
+        socket.on('service:item.complete' , function(data){
+            console.log(data);
+            $( ".order-"+data.id ).remove();
         });
 
     </script>
