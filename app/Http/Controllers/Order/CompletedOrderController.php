@@ -27,6 +27,7 @@ class CompletedOrderController extends Controller
 
         $user = $order->users->first();
         $user->notify(new OrderCompleteByKitchen($order));
-        return redirect('/orders');
+        $route_redirect = ($status == true ? '/orders/completed' : '/orders');
+      return redirect($route_redirect);
     }
 }
