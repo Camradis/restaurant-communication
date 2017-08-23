@@ -19,13 +19,11 @@ class CompletedOrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::findOrFail($id);
+        event( new OrderCompleteEvent($order));
         $status = $order->status;
         $order->status = !$status;
-        $order->save();
 
-        if ($status == false){
-            event( new OrderCompleteEvent($order));
-        }
+        $order->save();
 
         $user = $order->users->first();
         $user->notify(new OrderCompleteByKitchen($order));

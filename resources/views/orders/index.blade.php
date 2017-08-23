@@ -39,17 +39,17 @@
                 <div class="panel-body">
                     @if (! Auth::user()->hasRole('server'))
                     <p>
-                        <a href="{{ route('orders.completed.update' , ['id' => $order->id ]) }}"
+                        <a href="{{ route('orders.completed.update' , $order) }}"
                            onclick="event.preventDefault();
-                             document.getElementById('complete-form').submit();">
+                             document.getElementById('complete-form-{{ $order->id }}').submit();">
                             <i class="fa fa-circle fa-fw"></i>
                             @if ($order->status == 1)
-                                Unomplete
+                                Uncomplete
                             @else
                                 Complete
                             @endif
                         </a>
-                        <form id="complete-form" action="{{ route('orders.completed.update' , ['id' => $order->id ]) }}" method="POST" style="display: none;">
+                        <form id="complete-form-{{ $order->id }}" action="{{ route('orders.completed.update' , $order->id ) }}" method="POST" style="display: none;">
                             {{ csrf_field() }}
                             {{ method_field('PATCH') }}
                         </form>
