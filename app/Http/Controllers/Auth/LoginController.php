@@ -54,10 +54,13 @@ class LoginController extends Controller
     {
         // The verified method has been added to the user model and chained here
         // for better readability
-        User::where('email_token',$token)->firstOrFail()->activated();
+        $user = User::where('email_token',$token)->firstOrFail();
+        $user->activated();
 
         Session::flash('success', 'Put your credentials, please.');
 
-        return redirect('/login');
+        auth()->login($user);
+
+        return redirect()->to('/home');
     }
 }
