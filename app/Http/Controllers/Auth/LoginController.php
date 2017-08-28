@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -35,5 +39,25 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function credentials(Request $request)
+    {
+        return [
+            'email' => $request->email,
+            'password' => $request->password,
+            'activated' => 1,
+        ];
+    }
+
+    public function verify($token)
+    {
+        // The verified method has been added to the user model and chained here
+        // for better readability
+        User::where('email_token',$token)->firstOrFail()->activated();
+
+        Session::flash('success', 'Put your credentials, please.');
+
+        return redirect('/login');
     }
 }

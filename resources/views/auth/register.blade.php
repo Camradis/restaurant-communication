@@ -7,6 +7,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
+                    @if (Session::has('warning'))
+
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Warning:</strong> {{ Session::get('warning') }}
+                        </div>
+
+                    @endif
                     <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 

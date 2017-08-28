@@ -5,18 +5,19 @@ namespace App\Models;
 use App\Models\Filters\QueryFilter;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 
 class User extends Authenticatable
 {
     use Notifiable;
-
+    use AuthenticableTrait;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'activated' , 'email_token'
     ];
 
     /**
@@ -82,4 +83,10 @@ class User extends Authenticatable
         return $filters->apply($buider);
     }
 
+    public function activated()
+    {
+        $this->activated = 1;
+        $this->email_token = null;
+        $this->save();
+    }
 }

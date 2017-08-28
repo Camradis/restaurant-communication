@@ -22,6 +22,7 @@ class UserTableSeeder extends Seeder
         $admin->name = 'Admin Name';
         $admin->email = 'admin@example.com';
         $admin->password = bcrypt('secret');
+        $admin->activated = true;
         $admin->save();
         $admin->assignRole($adminRole);
 
@@ -29,6 +30,7 @@ class UserTableSeeder extends Seeder
         $server->name = 'Server Name';
         $server->email = 'server@example.com';
         $server->password = bcrypt('secret');
+        $server->activated = true;
         $server->save();
         $server->assignRole($serverRole);
 
@@ -36,6 +38,7 @@ class UserTableSeeder extends Seeder
         $server->name = 'Server Name2';
         $server->email = 'server2@example.com';
         $server->password = bcrypt('secret');
+        $server->activated = true;
         $server->save();
         $server->assignRole($serverRole);
 
@@ -50,6 +53,7 @@ class UserTableSeeder extends Seeder
         $kitchen->name = 'Kitchen Name';
         $kitchen->email = 'kitchen@example.com';
         $kitchen->password = bcrypt('secret');
+        $server->activated = true;
         $kitchen->save();
         $kitchen->assignRole($kitchenRole);
     }

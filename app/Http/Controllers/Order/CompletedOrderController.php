@@ -19,14 +19,16 @@ class CompletedOrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::findOrFail($id);
-        event( new OrderCompleteEvent($order));
         $status = $order->status;
-        $order->status = !$status;
 
+        event( new OrderCompleteEvent($order));
+
+        $order->status = !$status;
         $order->save();
 
         $user = $order->users->first();
         $user->notify(new OrderCompleteByKitchen($order));
+
         $route_redirect = ($status == true ? '/orders/completed' : '/orders');
       return redirect($route_redirect);
     }
