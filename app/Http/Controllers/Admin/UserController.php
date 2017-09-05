@@ -23,6 +23,7 @@ class UserController extends Controller
         return view('admin.index', ['users' => $paginatedSearchResults]);
     }
 
+    // TODO: Should refactor
     public function store(Request $request)
     {
         if ($request->input('name') && $request->input('email')) {
