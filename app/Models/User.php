@@ -11,13 +11,18 @@ class User extends Authenticatable
 {
     use Notifiable;
     use AuthenticableTrait;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'activated' , 'email_token'
+        'name',
+        'email',
+        'password',
+        'activated',
+        'email_token'
     ];
 
     /**
@@ -26,63 +31,126 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
+        'created_at',
+        'updated_at'
     ];
 
+    /**
+     * Retrieve role relation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function roles()
     {
-        return $this->belongsToMany('App\Models\Role')->withTimestamps();
+        return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
+    /**
+     * Determine if auth user role equals given role.
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
     public function hasRole($name)
     {
-        foreach($this->roles as $role)
-        {
-            if($role->name == $name) return true;
+        foreach ($this->roles as $role) {
+            if ($role->name == $name) return true;
         }
 
         return false;
     }
 
+
+    /**
+     * @param $role
+     *
+     * Assign role for user`s roles.
+     */
     public function assignRole($role)
     {
         return $this->roles()->attach($role);
     }
 
+
+    /**
+     * @param $role
+     *
+     * Remove given role from user.
+     *
+     * @return int
+     */
     public function removeRole($role)
     {
         return $this->roles()->detach($role);
     }
 
+    /**
+     * Retrieve order relations.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function orders()
     {
-        return $this->belongsToMany('App\Models\Order')->withTimestamps();
+        return $this->belongsToMany(Order::class)->withTimestamps();
     }
 
+    /**
+     * Determine if auth user role equals given role.
+     *
+     * @param int $id
+     *
+     * @return bool
+     */
     public function hasOrder($id)
     {
-        foreach($this->orders as $order)
-        {
-            if($order->id == $id) return true;
+        foreach ($this->orders as $order) {
+            if ($order->id == $id) return true;
         }
 
         return false;
     }
 
+    /**
+     * @param $order
+     *
+     * Assign order for user`s orders.
+     */
     public function assignOrder($order)
     {
         return $this->orders()->attach($order);
     }
 
+    /**
+     * @param $order
+     *
+     * Remove given order from user`s orders.
+     *
+     * @return int
+     */
     public function removeOrder($order)
     {
         return $this->orders()->detach($order);
     }
 
-    public function scopeFilter($buider, QueryFilter $filters){
-        return $filters->apply($buider);
+    /**
+     * @param QueryFilter $filters
+     * @param $builder
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter(QueryFilter $filters, $builder)
+    {
+        return $filters->apply($builder);
     }
 
+    /**
+     * Set user activated value true.
+     *
+     * Make user email_token equal null.
+     */
     public function activated()
     {
         $this->activated = 1;

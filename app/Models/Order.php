@@ -3,21 +3,49 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Filters\QueryFilter;
 
 class Order extends Model
 {
-    use SoftDeletes;
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'dish_name',
+        'status',
+        'board'
+    ];
 
-    protected $fillable = array('dish_name', 'status' , 'board');
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'updated_at',
+        'deleted_at'
+    ];
 
+    /**
+     * Retrieve user relation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function users()
     {
-        return $this->belongsToMany('App\Models\User')->withTimestamps();
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 
-    public function scopeFilter($buider, QueryFilter $filters){
-        return $filters->apply($buider);
+    /**
+     * @param QueryFilter $filters
+     * @param $builder
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter(QueryFilter $filters, $builder)
+    {
+        return $filters->apply($builder);
     }
 }

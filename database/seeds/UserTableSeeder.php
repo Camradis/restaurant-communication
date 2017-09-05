@@ -53,7 +53,7 @@ class UserTableSeeder extends Seeder
         $kitchen->name = 'Kitchen Name';
         $kitchen->email = 'kitchen@example.com';
         $kitchen->password = bcrypt('secret');
-        $server->activated = true;
+        $kitchen->activated = true;
         $kitchen->save();
         $kitchen->assignRole($kitchenRole);
     }
