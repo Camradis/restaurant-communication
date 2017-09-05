@@ -44,7 +44,7 @@ class Order extends Model
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeFilter(QueryFilter $filters, $builder)
+    public function scopeFilter($builder, QueryFilter $filters)
     {
         return $filters->apply($builder);
     }
