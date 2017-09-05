@@ -36,7 +36,12 @@ class UserController extends Controller
     public function search(Request $request)
     {
         $data = $request->except('_token');
+        $path = $this->getPathUrl($data);
 
+        return Redirect::to($path);
+    }
+
+    public function getFilteredData($data) {
         $filtered_data = array_filter(
             $data,
             create_function(
@@ -44,8 +49,12 @@ class UserController extends Controller
                 'return $a !== null;'
             )
         );
+        return $filtered_data;
+    }
 
+    public function getPathUrl($data) {
         $path = 'http://localhost:8000/admin/users';
+        $filtered_data = $this->getFilteredData($data);
 
         $index = 0;
         foreach ( $filtered_data as $key => $value) {
@@ -58,6 +67,6 @@ class UserController extends Controller
             }
         }
 
-        return Redirect::to($path);
+        return $path;
     }
 }
