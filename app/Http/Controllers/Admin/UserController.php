@@ -41,6 +41,13 @@ class UserController extends Controller
         return Redirect::to($path);
     }
 
+    /**
+     * Get filtered data.
+     *
+     * @param $data
+     *
+     * @return array
+     */
     public function getFilteredData($data) {
         $filtered_data = array_filter(
             $data,
@@ -52,6 +59,14 @@ class UserController extends Controller
         return $filtered_data;
     }
 
+
+    /**
+     * Get searching path url.
+     *
+     * @param $data
+     *
+     * @return string
+     */
     public function getPathUrl($data) {
         $path = 'http://localhost:8000/admin/users';
         $filtered_data = $this->getFilteredData($data);
