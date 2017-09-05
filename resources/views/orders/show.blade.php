@@ -1,29 +1,15 @@
 @extends('layouts.main')
 
-@section('content')
+@section('page-header', 'Orders in action')
 
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Orders in action</h1>
-        </div>
-        <!-- /.col-lg-12 -->
-    </div>
-    <!-- /.row -->
+@section('panel-heading')
+    Order # {{ $order->id }}
+@endsection
+
+@section('panel-body')
     <div class="row">
         <div class="col-lg-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Order # {{ $order->id }}
-                </div>
-                <div class="panel-body">
-                    <p> Dish: {{ $order->dish_name }}</p>
-                </div>
-                <div class="panel-footer">
-                    Order status: {{ $order ->status }}
-                </div>
-            </div>
+            @include('layouts.partials.orders._order')
         </div>
     </div>
-    <!-- /.row -->
-
 @endsection
