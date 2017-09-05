@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
 use App\Mail\EmailVerification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -15,17 +14,6 @@ use Illuminate\Support\Facades\Session;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
     /**
@@ -35,11 +23,8 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/home';
 
-
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * RegisterController constructor.
      */
     public function __construct()
     {
@@ -49,7 +34,8 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
+     *
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -64,7 +50,8 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
+     *
      * @return \App\Models\User
      */
     protected function create(array $data)
@@ -77,22 +64,21 @@ class RegisterController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
-
         $email = new EmailVerification(new User(['email_token' => $user->email_token, 'name' => $user->name]));
-        Mail::to($user->email)->send($email);
 
+        Mail::to($user->email)->send($email);
         Session::flash('warning', 'We sent you an activation code. Check your email.');
 
-
         return back();
-//        $this->guard()->login($user);
-//
-//        return $this->registered($request, $user)
-//            ?: redirect($this->redirectPath());
     }
 }

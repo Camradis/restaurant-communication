@@ -6,22 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
     /**
@@ -32,15 +20,20 @@ class LoginController extends Controller
     protected $redirectTo = '/orders';
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * LoginController constructor.
      */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * Get credentials
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
     protected function credentials(Request $request)
     {
         return [
@@ -50,11 +43,16 @@ class LoginController extends Controller
         ];
     }
 
+    /**
+     * Verify token
+     *
+     * @param $token
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function verify($token)
     {
-        // The verified method has been added to the user model and chained here
-        // for better readability
-        $user = User::where('email_token',$token)->firstOrFail();
+        $user = User::where('email_token', $token)->firstOrFail();
         $user->activated();
 
         Session::flash('success', 'Put your credentials, please.');
