@@ -60,7 +60,7 @@ class OrderController extends Controller
         $order = Order::create($request->all());
         Auth::user()->assignOrder($order);
 
-        $user = User::findOrFail(5);
+        $user = User::findOrFail(4);
         $user->notify(new AddOrderToKitchen($order));
 
         event(new TestEvent($order));

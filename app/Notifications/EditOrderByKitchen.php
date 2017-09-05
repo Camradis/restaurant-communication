@@ -5,18 +5,18 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Auth;
 
-class EditOrderByKitchen extends Notification
+class EditOrderByKitchen extends Notification implements ShouldQueue
 {
     use Queueable;
+
     protected $order;
 
     /**
-     * Create a new notification instance.
+     * EditOrderByKitchen constructor.
      *
-     * @return void
+     * @param $order
      */
     public function __construct($order)
     {
@@ -38,6 +38,7 @@ class EditOrderByKitchen extends Notification
      * Get the array representation of the notification.
      *
      * @param  mixed  $notifiable
+     *
      * @return array
      */
     public function toDatabase($notifiable)
@@ -45,19 +46,6 @@ class EditOrderByKitchen extends Notification
         return [
             'order' => $this->order,
             'user' => Auth::user(),
-        ];
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
         ];
     }
 }

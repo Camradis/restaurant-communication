@@ -2,11 +2,8 @@
 
 namespace App\Events;
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -14,14 +11,16 @@ use App\Models\Order;
 
 class OrderCompleteEvent implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     public $order;
 
     /**
-     * Create a new event instance.
+     * OrderCompleteEvent constructor.
      *
-     * @return void
+     * @param Order $order
      */
     public function __construct(Order $order)
     {
@@ -38,7 +37,13 @@ class OrderCompleteEvent implements ShouldBroadcast
         return ['service'];
     }
 
-    public function broadcastAs(){
+    /**
+     * Return broadcast name.
+     *
+     * @return string
+     */
+    public function broadcastAs()
+    {
         return 'item.complete';
     }
 }
