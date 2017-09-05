@@ -35,14 +35,27 @@ class UserController extends Controller
      */
     public function search(Request $request)
     {
+        $data = $request->except('_token');
+
+        $filtered_data = array_filter(
+            $data,
+            create_function(
+                '$a',
+                'return $a !== null;'
+            )
+        );
+
         $path = 'http://localhost:8000/admin/users';
 
-        if ($request->input('name') && $request->input('email')) {
-            $path = $path . '?name=' . $request->input('name') . '&email=' . $request->input('email');
-        } else if ($request->input('email')) {
-            $path = $path . '?email=' . $request->input('email');
-        } else if ($request->input('name')) {
-            $path = $path . '?name=' . $request->input('name');
+        $index = 0;
+        foreach ( $filtered_data as $key => $value) {
+            if($index == 0) {
+                $path = "$path?$key=$value";
+
+                $index++;
+            } else {
+                $path = "$path&$key=$value";
+            }
         }
 
         return Redirect::to($path);
