@@ -11,12 +11,16 @@ use Illuminate\Database\Eloquent\Collection;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
 
     /**
+     * Paginate data, that isn`t Collection.
+     *
      * @param $data
      * @param $request
+     *
      * @return LengthAwarePaginator
      */
     public function paginate($data, $request){

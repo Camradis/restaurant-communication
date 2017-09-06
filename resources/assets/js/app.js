@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -7,16 +6,26 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+var socket = io(':3000');
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+function appendMessage(data){
+    $('.orders').append(
+        $('<p/>').append(
+            $('<p/>').text('Dish -'+data.dish_name+' '),
+            $('<p/>').text('Board -'+data.board+' '),
+            $('<p/>').text('Created -'+data.created_at+' ')
+        )
+    );
+}
 
-Vue.component('example', require('./components/Example.vue'));
+socket.on('service:item' , function(data){
+    console.log(data.id);
+    console.log(data.dish_name);
 
-const app = new Vue({
-    el: '#app'
+    appendMessage(data);
+});
+
+socket.on('service:item.complete' , function(data){
+    console.log(data);
+    $( ".order-"+data.id ).remove();
 });

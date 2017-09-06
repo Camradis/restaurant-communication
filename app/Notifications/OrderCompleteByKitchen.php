@@ -2,23 +2,21 @@
 
 namespace App\Notifications;
 
-
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Auth;
 
-class OrderCompleteByKitchen extends Notification
+class OrderCompleteByKitchen extends Notification implements ShouldQueue
 {
     use Queueable;
+
     protected $order;
 
     /**
-     * Create a new notification instance.
+     * OrderCompleteByKitchen constructor.
      *
-     * @return void
+     * @param $order
      */
     public function __construct($order)
     {
@@ -28,7 +26,8 @@ class OrderCompleteByKitchen extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param  mixed $notifiable
+     *
      * @return array
      */
     public function via($notifiable)
@@ -39,7 +38,8 @@ class OrderCompleteByKitchen extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param  mixed $notifiable
+     *
      * @return array
      */
     public function toDatabase($notifiable)
@@ -47,19 +47,6 @@ class OrderCompleteByKitchen extends Notification
         return [
             'order' => $this->order,
             'user' => Auth::user(),
-        ];
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
         ];
     }
 }

@@ -25,7 +25,7 @@ class OrderItemRequest extends FormRequest
     {
         return [
             'dish_name' => 'required|max:255',
-            'board' => 'required|numeric|max:30',
+            'board'     => 'required|numeric|max:30',
         ];
     }
 }

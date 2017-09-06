@@ -11,14 +11,15 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderUpdated extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $order;
 
     /**
-     * Create a new message instance.
+     * OrderUpdated constructor.
      *
-     * @return void
+     * @param Order $order
      */
     public function __construct(Order $order)
     {
@@ -32,7 +33,8 @@ class OrderUpdated extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->from(Auth::user()->email)
+        return $this
+            ->from(Auth::user()->email)
             ->view('emails.orders.updated');
     }
 }
