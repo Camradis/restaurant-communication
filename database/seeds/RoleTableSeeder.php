@@ -17,14 +17,14 @@ class RoleTableSeeder extends Seeder
         $role_admin->description = 'A Admin User';
         $role_admin->save();
 
-        $role_server = new Role();
-        $role_server->name = 'server';
-        $role_server->description = 'A Server User';
-        $role_server->save();
-
         $role_kitchen = new Role();
         $role_kitchen->name = 'kitchen';
         $role_kitchen->description = 'A Kitchen User';
         $role_kitchen->save();
+
+        $role_server = new Role();
+        $role_server->name = 'server';
+        $role_server->description = 'A Server User';
+        $role_server->save();
     }
 }

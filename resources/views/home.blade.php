@@ -9,7 +9,15 @@
 
                 <div class="panel-body">
                     You {{ Auth::user()->name }} are logged in!
-                    {{ Auth::user()->role->name }}
+                    <p>
+                        {{ Auth::user()->role->name }}
+                    </p>
+                    <p>
+                        {{ Auth::user()->name }}
+                    </p>
+                    <p>
+                        {{ Auth::user()->email }}
+                    </p>
                 </div>
             </div>
         </div>

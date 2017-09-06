@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Role;
-use App\Models\User;
 
 class UserTableSeeder extends Seeder
 {
@@ -13,25 +12,21 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $adminRole = Role::whereName('admin')->first();
-        $kitchenRole = Role::whereName('kitchen')->first();
+        factory(App\Models\User::class)->states('admin')->create([
+            'email' => 'admin@example.com',
+            'name'  => 'Administrator'
+        ]);
 
-        $admin = new User();
-        $admin->name = 'Admin Name';
-        $admin->email = 'admin@example.com';
-        $admin->password = bcrypt('secret');
-        $admin->activated = true;
-        $admin->role()->associate($adminRole);
+        factory(App\Models\User::class)->states('kitchen')->create([
+            'email' => 'kitchen@example.com',
+            'name'  => 'Kitchen Manager'
+        ]);
 
-        $admin->save();
-
-        $admin = new User();
-        $admin->name = 'Kitchen Name';
-        $admin->email = 'kitchen@example.com';
-        $admin->password = bcrypt('secret');
-        $admin->activated = true;
-        $admin->role()->associate($kitchenRole);
-
-        $admin->save();
+        foreach(range(1,5) as $index)
+        {
+            factory(App\Models\User::class)->states('server')->create([
+                'email' => "server$index@example.com"
+            ]);
+        }
     }
 }
