@@ -48,4 +48,32 @@ class Order extends Model
     {
         return $filters->apply($builder);
     }
+
+    /**
+     * Get status name.
+     *
+     * @return string
+     */
+    public function getStatusNameAttribute()
+    {
+        if($this->status == 0 ) {
+            return "Uncompleted";
+        } else {
+            return "Completed";
+        }
+    }
+
+    /**
+     * Get status current action name.
+     *
+     * @return string
+     */
+    public function getStatusActionNameAttribute()
+    {
+        if($this->status == 0 ) {
+            return "Complete";
+        } else {
+            return "Uncomplete";
+        }
+    }
 }

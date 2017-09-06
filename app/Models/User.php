@@ -22,7 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'activated',
-        'email_token'
+        'email_token',
+        'role_id',
     ];
 
     /**
@@ -42,9 +43,9 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function roles()
+    public function role()
     {
-        return $this->belongsToMany(Role::class)->withTimestamps();
+        return $this->belongsTo(Role::class);
     }
 
     /**
@@ -56,35 +57,33 @@ class User extends Authenticatable
      */
     public function hasRole($name)
     {
-        foreach ($this->roles as $role) {
-            if ($role->name == $name) return true;
+        if ($this->role->name == $name) {
+            return true;
         }
-
         return false;
     }
 
-
     /**
+     * Assign user role.
+     *
      * @param $role
      *
-     * Assign role for user`s roles.
+     * @return mixed
      */
     public function assignRole($role)
     {
-        return $this->roles()->attach($role);
+        return $this->role()->associate($role)->save();
     }
 
 
     /**
-     * @param $role
-     *
-     * Remove given role from user.
+     * Remove role from user.
      *
      * @return int
      */
-    public function removeRole($role)
+    public function removeRole()
     {
-        return $this->roles()->detach($role);
+        return $this->role()->dissociate();
     }
 
     /**

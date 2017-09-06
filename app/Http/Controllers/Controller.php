@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -29,9 +30,21 @@ class Controller extends BaseController
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         $perPage = 9;
         $currentPageSearchResults = $collection->slice(($currentPage - 1) * $perPage, $perPage)->all();
-        $paginatedSearchResults= new LengthAwarePaginator($currentPageSearchResults, count($collection), $perPage);
+        $paginatedSearchResults = new LengthAwarePaginator($currentPageSearchResults, count($collection), $perPage);
         $paginatedSearchResults->setPath($request->url());
         $paginatedSearchResults->appends($request->except(['page']));
+
         return $paginatedSearchResults;
+    }
+
+    /**
+     * Get user, that is kitchen manager.
+     *
+     * @return Collection|\Illuminate\Database\Eloquent\Model
+     */
+    public function getKitchenManager() {
+        $kitchen_manager = User::findOrFail(2);
+
+        return $kitchen_manager;
     }
 }

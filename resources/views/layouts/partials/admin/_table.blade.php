@@ -35,9 +35,7 @@
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
             <td class="center">
-                @foreach($user->roles as $role)
-                    {{ $role->name }}
-                @endforeach
+                {{ $user->role->name }}
             </td>
             <td class="center">
                 {{ $user->created_at }}

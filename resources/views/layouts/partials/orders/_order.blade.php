@@ -13,11 +13,7 @@
                    onclick="event.preventDefault();
                            document.getElementById('complete-form-{{ $order->id }}').submit();">
                     <i class="fa fa-circle fa-fw"></i>
-                    @if ($order->status == 1)
-                        Uncomplete
-                    @else
-                        Complete
-                    @endif
+                    {{ $order->status_action_name }}
                 </a>
             <form id="complete-form-{{ $order->id }}" action="{{ route('orders.completed.update' , $order->id ) }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
@@ -33,7 +29,7 @@
         </p>
     </div>
     <div class="panel-footer">
-        Order status: {{ $order->status }}
+        Order status: {{ $order->status_name }}
 
         @if (! Auth::user()->hasRole('server'))
             <a href="{{ route('orders.edit' , ['id' => $order->id ]) }}">Edit</a>

@@ -9,9 +9,7 @@
 
                 <div class="panel-body">
                     You {{ Auth::user()->name }} are logged in!
-                    @foreach(Auth::user()->roles as $role)
-                        {{ $role->name }}
-                    @endforeach
+                    {{ Auth::user()->role->name }}
                 </div>
             </div>
         </div>
