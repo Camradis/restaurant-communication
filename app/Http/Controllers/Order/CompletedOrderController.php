@@ -43,6 +43,7 @@ class CompletedOrderController extends Controller
         $order->save();
 
         $user = $order->users->first();
+
         $user->notify(new OrderCompleteByKitchen($order));
 
         $route_redirect = ($status == true ? '/orders/completed' : '/orders');
